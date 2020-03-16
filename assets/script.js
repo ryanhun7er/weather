@@ -23,10 +23,10 @@ $.ajax({
 
     console.log(response);
 
-    var cityName = $("<div").text("City: " + response.name);
-    var temp = $("div").text("Current Temperature: " + response.main.temp);
-    var humidity = $("div").text("Humidity: " + response.main.humidity);
-    var wind = $("div").text("Wind Speed: " + response.wind.speed);
+    var cityName = $("<div>").text("City: " + response.name);
+    var temp = $("<div>").text("Current Temperature: " + response.main.temp);
+    var humidity = $("<div>").text("Humidity: " + response.main.humidity);
+    var wind = $("<div>").text("Wind Speed: " + response.wind.speed);
 
     $("#city-weather").empty();
     $("#city-weather").append(cityName, temp, humidity, wind);
