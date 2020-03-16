@@ -10,13 +10,23 @@
 
     <div class="container">
         <h1>Weather Forecast</h1>
+        <p id="currentDay" class="lead"></p>
         <!-- input box for searching city -->
-        <input type="text" size=18 name="output" id="city">
+        <input type="text" size=18 class="input" id="city">
         <!-- search button  -->
         <input type ="button" value="Search" id= search>
 
-        <!-- data to populate here: -->
+        <!-- data to populate cuurent weather here: -->
+        <h2>Current Weather</h2>
         <div id="city-weather"></div>
+
+        <!-- data to populate history seach  -->
+        <h2>Search History</h2>
+        <div id="search-history"></div>
+
+        <!-- data to populate 5 day forecast  -->
+        <h2>5 Day Forecast</h2>
+        <div id="fiveDay"></div>
         
     </div>
 

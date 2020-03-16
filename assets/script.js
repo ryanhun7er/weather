@@ -1,4 +1,22 @@
+$(document).ready(function () {
 
+    //add date and time, then update clock to run dynamically
+    var currentDate = "";
+    var currentTime = "";
+    //var currentHour = moment().format('HH');
+
+    var update = function() {
+        currentTime = moment(new Date())
+        currentDate.html(currentTime.format('dddd, MMMM Do YYYY, h:mm:ss a'));
+    };
+
+    $(document).ready(function() {
+        currentDate = $('#currentDay')
+        update();
+        setInterval(update, 1000);
+    })
+
+})
 
 
 
@@ -34,13 +52,17 @@ $.ajax({
 
   })
 
-};
-
+}
 //event handler for user clicking search button
 $("#search").on("click", function(event) {
     event.preventDefault();
 
     var cityInput = $("#city").val().trim();
+
+    var searchNum = $(this).attr("id");
+    var city = $(this).siblings(".input").val();
+
+    localStorage.setItem(searchNum, city);
 
     gatherWeather(cityInput);
 });
