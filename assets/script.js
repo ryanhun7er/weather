@@ -20,24 +20,19 @@ $(document).ready(function () {
 
 //variables for page
 
-var city = "Chicago"
+var city = document.getElementById("city").value;
 var APIkey = 'eab4186c021254a40cb2caf858df2e69';
 //var city = 'Nashville';
-var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIkey;
-var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=' + APIkey;
+
+
 let search = localStorage.getItem('city') ?
 JSON.parse(localStorage.getItem('city')) : [];
 
-const data = JSON.parse(localStorage.getItem('city'));
 
-const liMaker = text => {
-    const li = document.createElement('li')
-    li.textContent = text
-    ul.appendChild(li)
-}
 
-function gatherWeather() {
+function gatherWeather(city) {
 
+    var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIkey;
 
 //ajax for calling weather information
 
@@ -64,7 +59,9 @@ $.ajax({
 
 }
 
-function fiveDay() {
+function fiveDay(city) {
+
+    var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=' + APIkey;
  
 
     //ajax for calling 5 day forecast
@@ -120,16 +117,15 @@ $("#search").on("click", function(event) {
     var forecast = $("#city").val().trim();
 
     var searchNum = $(this).attr("id");
-    var city = $(this).siblings(".input").val();
+    var cityName = $(this).siblings(".input").val();
 
     search.push(cityInput.value);
 
-    localStorage.setItem(searchNum, city);
+    localStorage.setItem(searchNum, cityName);
 
-    data.forEach(city => {
-        liMaker(city)
-    })
+    
 
     gatherWeather(cityInput);
     fiveDay(forecast)
 });
+
