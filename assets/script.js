@@ -18,11 +18,23 @@ $(document).ready(function () {
 
 })
 
+//variables for page
+
 var city = "Chicago"
 var APIkey = 'eab4186c021254a40cb2caf858df2e69';
 //var city = 'Nashville';
 var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIkey;
 var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=' + APIkey;
+let search = localStorage.getItem('city') ?
+JSON.parse(localStorage.getItem('city')) : [];
+
+const data = JSON.parse(localStorage.getItem('city'));
+
+const liMaker = text => {
+    const li = document.createElement('li')
+    li.textContent = text
+    ul.appendChild(li)
+}
 
 function gatherWeather() {
 
@@ -64,7 +76,7 @@ function fiveDay() {
         data: {
             q: city,
             units: 'imperial',
-            cnt: "5"
+            cnt: "10"
         },
 
 
@@ -98,6 +110,9 @@ function fiveDay() {
 
 
 //event handler for user clicking search button
+
+
+
 $("#search").on("click", function(event) {
     event.preventDefault();
 
@@ -107,7 +122,13 @@ $("#search").on("click", function(event) {
     var searchNum = $(this).attr("id");
     var city = $(this).siblings(".input").val();
 
+    search.push(cityInput.value);
+
     localStorage.setItem(searchNum, city);
+
+    data.forEach(city => {
+        liMaker(city)
+    })
 
     gatherWeather(cityInput);
     fiveDay(forecast)
