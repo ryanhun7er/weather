@@ -24,8 +24,8 @@ var city = document.getElementById("city").value;
 var APIkey = 'eab4186c021254a40cb2caf858df2e69';
 var APIkeyG = 'AIzaSyCmplXCB6KR_-vv7v-oTy2LQNMg_veu8ic'
 
-let search = localStorage.getItem('city') ?
-JSON.parse(localStorage.getItem('city')) : [];
+
+
 
 
 //function to get current weather
@@ -116,19 +116,40 @@ $("#search").on("click", function(event) {
 
     var cityInput = $("#city").val().trim();
     var forecast = $("#city").val().trim();
+    var searchArray = JSON.parse(localStorage.getItem('cityInput')) || [];
 
-    var searchNum = $(this).attr("id");
-    var cityName = $(this).siblings(".input").val();
+    searchArray.push(cityInput);
 
-    search.push(cityInput.value);
+    localStorage.setItem('cityInput', JSON.stringify(searchArray))
 
-    localStorage.setItem(searchNum, cityName);
-
-    
-
+    populatelist();
     getWeather(cityInput);
     fiveDay(forecast)
 });
+
+//append cities to searh history
+function populatelist() {
+    var searchArray = JSON.parse(localStorage.getItem("cityInput")) || [];
+    $("#search-history").empty();
+    searchArray.forEach(function(list) {
+        $("#search-history").append("<li>" + list + "</li>")
+    })
+};
+
+populatelist();
+
+
+
+
+
+
+
+
+// var searchArray = localStorage.getItem(city) ?
+// JSON.parse(localStorage.getItem(city)) : [];
+
+  //var searchNum = $(this).attr("id");
+    //var cityName = $(this).siblings(".input").val();
 
 
 // function initMap() {
