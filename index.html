@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/style.css">
     <title>Weather Forecast</title>
 </head>
@@ -25,16 +26,18 @@
         <!-- input box for searching city and search button -->
         <div class="row">
             <div class="col-md-4">
+                <div id="history">
                 <h2>Search History</h2>
                 <ul id="search-history"></ul>
+                </div>
             </div>    
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <div id="current">
                     <h2>Current Weather</h2>
                     <div id="city-weather"></div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <div id="five">
                     <h2>5 Day Forecast</h2>
                     <div id="fiveDay"></div>
