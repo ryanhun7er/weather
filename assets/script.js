@@ -73,31 +73,36 @@ function fiveDay(city) {
         data: {
             q: city,
             units: 'imperial',
-            cnt: "10"
+            cnt: "50"
         },
 
 
-      success: function(data) {
-        console.log('Data:', data)
-        var forecast = "";
-        
+        success: function (data) {
+            console.log('Data:', data)
+            var forecast = "";
 
-        forecast += "<h3>" + data.city.name + "</h3>";
-        $.each(data.list, function(dt_txt, val) {
-            var tempH = Math.floor(val.main.temp_max);
-            var tempL = Math.floor(val.main.temp_min);
-            forecast += "<p>";
-            forecast += "<b>" + val.dt_txt + "</b>: ";
-            forecast += "High: " + tempH + "&degF";
-            forecast += " " + "Low: " + tempL + "&degF";
-            forecast += "<span> | " + val.weather[0].description + "</span>";
-            forecast += "<img src='https://openweathermap.org/img/w/" + val.weather[0].icon + ".png'>";
-            forecast += "</p>";
-        });
 
-        $("#fiveDay").html(forecast);
+            forecast += "<h3>" + data.city.name + "</h3>";
+            for (var i = 0; i < data.list.length; i++) {
 
-    }
+                if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                    var tempH = Math.floor(data.list[i].main.temp_max);
+                    var tempL = Math.floor(data.list[i].main.temp_min);
+                    var dateC = data.list[i].dt_txt
+                    var dateR = dateC.split('15:00:00').join("");
+                    forecast += "<p>";
+                    forecast += "<b>" + dateR + "</b>: ";
+                    forecast += "High: " + tempH + "&degF";
+                    forecast += " " + "Low: " + tempL + "&degF";
+                    forecast += "<span> | " + data.list[i].weather[0].description + "</span>";
+                    forecast += "<img src='https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png'>";
+                    forecast += "</p>";
+                }
+            }
+
+            $("#fiveDay").html(forecast);
+
+        }
     
     
 })
