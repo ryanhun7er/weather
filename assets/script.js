@@ -132,7 +132,7 @@ function populatelist() {
     var searchArray = JSON.parse(localStorage.getItem("cityInput")) || [];
     $("#search-history").empty();
     searchArray.forEach(function(list) {
-        $("#search-history").append("<li>" + list + "</li>")
+        $("#search-history").prepend("<li>" + list + "</li>")
     })
 };
 

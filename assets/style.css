@@ -15,6 +15,13 @@
     
 }
 
-/* #fiveDay {
-    background-color: blue;
-} */
+.col-md-4 {
+    float: left;
+    width: 15%;
+}
+
+.col-md-8 {
+    float: left;
+    width: 40%;
+}
+
