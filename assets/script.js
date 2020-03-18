@@ -22,15 +22,14 @@ $(document).ready(function () {
 
 var city = document.getElementById("city").value;
 var APIkey = 'eab4186c021254a40cb2caf858df2e69';
-//var city = 'Nashville';
-
+var APIkeyG = 'AIzaSyCmplXCB6KR_-vv7v-oTy2LQNMg_veu8ic'
 
 let search = localStorage.getItem('city') ?
 JSON.parse(localStorage.getItem('city')) : [];
 
 
-
-function gatherWeather(city) {
+//function to get current weather
+function getWeather(city) {
 
     var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIkey;
 
@@ -59,6 +58,7 @@ $.ajax({
 
 }
 
+//function to get 5 day weather
 function fiveDay(city) {
 
     var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=' + APIkey;
@@ -104,11 +104,7 @@ function fiveDay(city) {
 }
 
 
-
-
 //event handler for user clicking search button
-
-
 
 $("#search").on("click", function(event) {
     event.preventDefault();
@@ -125,7 +121,20 @@ $("#search").on("click", function(event) {
 
     
 
-    gatherWeather(cityInput);
+    getWeather(cityInput);
     fiveDay(forecast)
 });
+
+
+// function initMap() {
+
+//     var queryURL = 'https://maps.googleapis.com/maps/api/js?key=' + APIkeyG + '&callback=initMap';
+
+//     $.ajax({
+//         url: queryURL,
+//         method: "GET"
+//       }).then(function(response) {
+
+//         var cityLoc = response.coord
+// }
 
