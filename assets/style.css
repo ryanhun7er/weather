@@ -35,6 +35,12 @@
     
 }
 
+#mapH {
+    text-align: center;
+    padding-top: 1rem;
+    
+}
+
 li  {
     list-style-type: none;
     text-align: center;
@@ -52,3 +58,8 @@ ul {
 }
 
 
+#map {
+    height: 400px;
+    width: 100%;
+    text-align: center;
+}

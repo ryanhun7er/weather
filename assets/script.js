@@ -151,6 +151,8 @@ function pageLoad() {
         method: "GET"
     }).then(function(response) {
 
+        
+
     var cityName = $("<h4>").text(response.name);
     var iconPic = "<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>";
     var temp = $("<div>").text("Current Temperature: " + ((Math.floor(response.main.temp -273.15) * 1.8) + 32 + "\xB0F"));
@@ -176,7 +178,7 @@ $.ajax({
 
 
     success: function (data) {
-        console.log('Data:', data)
+        
         var forecast = "";
 
 
@@ -202,6 +204,7 @@ $.ajax({
         $("#fiveDay").html(forecast);
         
     }
+    
 
 })
 }
@@ -218,9 +221,8 @@ function loadCity() {
             
             var citySearch = $(this).text();
             var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + citySearch + '&appid=' + APIkey;
-                console.log(queryURL);
             var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + citySearch + '&appid=' + APIkey;
-                console.log(queryURL2);
+                
             $.ajax({
                 url: queryURL,
                 method: "GET"
@@ -253,7 +255,7 @@ function loadCity() {
         
         
                 success: function (data) {
-                    console.log('Data:', data)
+                    
                     var forecast = "";
         
         
@@ -285,27 +287,44 @@ function loadCity() {
     
 
     
+//add map of city to search history
+function initMap() {
+    
+    $('#search-history').on('click', 'li',(function() {
+            
+            
+    var citySearch = $(this).text();
+    
+    // var searchArray = JSON.parse(localStorage.getItem("cityInput")) || [];
+    var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + citySearch + '&appid=' + APIkey;
 
-
-
-
-
-
-
-
-
-// function initMap() {
-
-//     var queryURL = 'https://maps.googleapis.com/maps/api/js?key=' + APIkeyG + '&callback=initMap';
-
-//     $.ajax({
-//         url: queryURL,
-//         method: "GET"
-//       }).then(function(response) {
-
-//         var cityLoc = response.coord
-// }
-
-// $("<button>").text(searchArray[i].attr('id', searchArray[i])).addClass('cities').appendTo("#search-history");
-// $("</br>").appendTo("#search-history");
-// $("#" + searchArray[i]).on("click", function()
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response);
+        var lng = parseFloat(response.coord.lon);
+        var lat = parseFloat(response.coord.lat);
+        // var uluru = "{lon: " + uluru1 + ',' + " lat: " + uluru2 + "}";
+        // var uluru = 
+        var map = new google.maps.Map(
+            document.getElementById('map'), {
+                zoom: 4, 
+                center: {
+                    lat: lat,
+                    lng: lng
+                }
+            });
+        var marker = new google.maps.Marker({
+            position: {
+                lat: lat,
+                lng: lng
+            },
+             map: map
+            });
+    
+    })
+ 
+})
+    )
+}
