@@ -299,7 +299,7 @@ function initMap2() {
         var lat = parseFloat(response.coord.lat);
         var map = new google.maps.Map(
             document.getElementById('map'), {
-                zoom: 4, 
+                zoom: 8, 
                 center: {
                     lat: lat,
                     lng: lng
@@ -335,7 +335,7 @@ function initMap() {
         var lat = parseFloat(response.coord.lat);
         var map = new google.maps.Map(
             document.getElementById('map'), {
-                zoom: 4, 
+                zoom: 8, 
                 center: {
                     lat: lat,
                     lng: lng
