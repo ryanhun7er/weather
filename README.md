@@ -16,6 +16,7 @@ https://ryanhun7er.github.io/weather
 * Search history will be populated with the cities searched.
 * You can click any city in the search history column to refresh reqeuested city weather information.
 * Upon closing the window and reopenign the app, the last weather searched will be displayed.
+* Maps will disply based on searched city (and will update based on selecting a new city from the history list)
 
 ## Technology Stack
 * HTML, CSS, Javascript, AJAX
