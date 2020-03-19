@@ -1,25 +1,34 @@
 .container {
-    width: 100%;
+    background: linear-gradient(360deg, rgb(169, 250, 173) 0%, rgb(23, 77, 156) 100%);
+    background-size: cover;
+    font-family: 'Lora', serif;
+    /* rgb(4, 64, 153) 100%); */
 }
 
-#header {
-    background-image: url(images/clouds.gif); 
+
+.col-md-12 {
+    background-image: url(images/cloud2.gif); 
+    background-size: cover;
     width: 100%;
     text-align: center;
     height: 9rem;
+    
     
 }
 
 #current {
     text-align: center;
+    padding-top: 1rem;
 }
 
 #five {
     text-align: center;
+    padding-top: 1rem;
     
 }
 #history {
     text-align: center;
+    padding-top: 1rem;
     
 }
 
@@ -34,8 +43,9 @@ ul {
 }
 
 .clickMe {
-    color: blue;
+    color: rgb(13, 13, 180);
     cursor: pointer;
+    text-decoration: underline;
 }
 
 
