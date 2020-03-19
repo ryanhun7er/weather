@@ -216,9 +216,11 @@ function loadCity() {
             $('#search-history').on('click', 'li',(function() {
             
             
-            var citySearch = localStorage.getItem('cityInput')
+            var citySearch = $(this).text();
             var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + citySearch + '&appid=' + APIkey;
-
+                console.log(queryURL);
+            var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + citySearch + '&appid=' + APIkey;
+                console.log(queryURL2);
             $.ajax({
                 url: queryURL,
                 method: "GET"
@@ -235,11 +237,51 @@ function loadCity() {
             $("#city-weather").empty();
             $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind);  
             })
+        
+     
+//ajax for getting 5 day on button click
+                       
+            $.ajax({
+                url: queryURL2,
+                dataType: 'json',
+                method: "GET",
+                data: {
+                    q: citySearch,
+                    units: 'imperial',
+                    cnt: "50"
+                },
+        
+        
+                success: function (data) {
+                    console.log('Data:', data)
+                    var forecast = "";
+        
+        
+                    forecast += "<h4>" + data.city.name + "</h4>";
+                    for (var i = 0; i < data.list.length; i++) {
+        
+                        if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                            var tempH = Math.floor(data.list[i].main.temp_max);
+                            var tempL = Math.floor(data.list[i].main.temp_min);
+                            var dateC = data.list[i].dt_txt
+                            var dateR = dateC.split('15:00:00').join("");
+                            forecast += "<p>";
+                            forecast += "<b>" + dateR + "</b>: ";
+                            forecast += "</p>";
+                            forecast += "High: " + tempH + "&degF";
+                            forecast += " " + "Low: " + tempL + "&degF";
+                            forecast += "<span> | " + data.list[i].weather[0].description + "</span>";
+                            forecast += "<img src='https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png'>";
+                            forecast += "</p>";
+                        }
+                    }
+        
+                    $("#fiveDay").html(forecast);
+                }
+            })
         }
-
-            ))
-    }
-    
+    ))
+    } 
     
 
     

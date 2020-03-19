@@ -14,7 +14,7 @@ https://ryanhun7er.github.io/weather
 * 
 
 ## Technology Stack
-* HTML, CSS, Javascript
+* HTML, CSS, Javascript, AJAX
 
 
 ## License
