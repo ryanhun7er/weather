@@ -25,9 +25,6 @@ var APIkey = 'eab4186c021254a40cb2caf858df2e69';
 var APIkeyG = 'AIzaSyCmplXCB6KR_-vv7v-oTy2LQNMg_veu8ic'
 
 
-
-
-
 //function to get current weather
 function getWeather(city) {
 
@@ -44,6 +41,7 @@ $.ajax({
     console.log(response);
 
     var cityName = $("<h4>").text(response.name);
+    var iconPic = "<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>";
     var temp = $("<div>").text("Current Temperature: " + ((Math.floor(response.main.temp -273.15) * 1.8) + 32 + "\xB0F"));
     var high = $("<div>").text("Expected High Temp: " + ((Math.floor(response.main.temp_max -273.15) * 1.8) + 32 + "\xB0F"));
     var low = $("<div>").text("Expected Low Temp: " + ((Math.floor(response.main.temp_min -273.15) * 1.8) + 32 + "\xB0F"));
@@ -51,7 +49,7 @@ $.ajax({
     var wind = $("<div>").text("Wind Speed: " + response.wind.speed + " " + "mph");
 
     $("#city-weather").empty();
-    $("#city-weather").append(cityName, temp, high, low, humidity, wind);
+    $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind);
 
 
   })
@@ -82,7 +80,7 @@ function fiveDay(city) {
             var forecast = "";
 
 
-            forecast += "<h3>" + data.city.name + "</h3>";
+            forecast += "<h4>" + data.city.name + "</h4>";
             for (var i = 0; i < data.list.length; i++) {
 
                 if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
@@ -92,6 +90,7 @@ function fiveDay(city) {
                     var dateR = dateC.split('15:00:00').join("");
                     forecast += "<p>";
                     forecast += "<b>" + dateR + "</b>: ";
+                    forecast += "</p>";
                     forecast += "High: " + tempH + "&degF";
                     forecast += " " + "Low: " + tempL + "&degF";
                     forecast += "<span> | " + data.list[i].weather[0].description + "</span>";
@@ -127,7 +126,7 @@ $("#search").on("click", function(event) {
     fiveDay(forecast)
 });
 
-//append cities to searh history
+//append cities to search history
 function populatelist() {
     var searchArray = JSON.parse(localStorage.getItem("cityInput")) || [];
     $("#search-history").empty();
@@ -138,18 +137,80 @@ function populatelist() {
 
 populatelist();
 
+//load page with last query
+
+function pageLoad() {
+    var searchArray = JSON.parse(localStorage.getItem("cityInput")) || [];
+    var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchArray[searchArray.length-1] + '&appid=' + APIkey;
+    var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchArray[searchArray.length-1] + '&appid=' + APIkey;
+ 
+//ajax for current weather to reload
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+
+    var cityName = $("<h4>").text(response.name);
+    var iconPic = "<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>";
+    var temp = $("<div>").text("Current Temperature: " + ((Math.floor(response.main.temp -273.15) * 1.8) + 32 + "\xB0F"));
+    var high = $("<div>").text("Expected High Temp: " + ((Math.floor(response.main.temp_max -273.15) * 1.8) + 32 + "\xB0F"));
+    var low = $("<div>").text("Expected Low Temp: " + ((Math.floor(response.main.temp_min -273.15) * 1.8) + 32 + "\xB0F"));
+    var humidity = $("<div>").text("Humidity: " + response.main.humidity + " " + "%");
+    var wind = $("<div>").text("Wind Speed: " + response.wind.speed + " " + "mph");
+
+    $("#city-weather").empty();
+    $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind);
+})
+
+//ajax for 5 day weather to reload
+$.ajax({
+    url: queryURL2,
+    dataType: 'json',
+    method: "GET",
+    data: {
+        q: searchArray[searchArray.length-1],
+        units: 'imperial',
+        cnt: "50"
+    },
+
+
+    success: function (data) {
+        console.log('Data:', data)
+        var forecast = "";
+
+
+        forecast += "<h3>" + data.city.name + "</h3>";
+        for (var i = 0; i < data.list.length; i++) {
+
+            if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                var tempH = Math.floor(data.list[i].main.temp_max);
+                var tempL = Math.floor(data.list[i].main.temp_min);
+                var dateC = data.list[i].dt_txt
+                var dateR = dateC.split('15:00:00').join("");
+                forecast += "<p>";
+                forecast += "<b>" + dateR + "</b>: ";
+                forecast += "</p>";
+                forecast += "High: " + tempH + "&degF";
+                forecast += " " + "Low: " + tempL + "&degF";
+                forecast += "<span> | " + data.list[i].weather[0].description + "</span>";
+                forecast += "<img src='https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png'>";
+                forecast += "</p>";
+            }
+        }
+
+        $("#fiveDay").html(forecast);
+    }
+
+})
+}
+
+
+pageLoad();
 
 
 
 
 
-
-
-// var searchArray = localStorage.getItem(city) ?
-// JSON.parse(localStorage.getItem(city)) : [];
-
-  //var searchNum = $(this).attr("id");
-    //var cityName = $(this).siblings(".input").val();
 
 
 // function initMap() {
@@ -163,4 +224,3 @@ populatelist();
 
 //         var cityLoc = response.coord
 // }
-

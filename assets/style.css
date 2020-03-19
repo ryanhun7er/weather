@@ -1,8 +1,12 @@
- #header {
-    background: url(images/clouds.gif); 
+.container {
+    width: 100%;
+}
+
+#header {
+    background-image: url(images/clouds.gif); 
     width: 100%;
     text-align: center;
-    height: 10rem;
+    height: 9rem;
     
 }
 
@@ -28,5 +32,7 @@ li  {
 ul {
     padding-left: 0%;
 }
+
+
 
 
