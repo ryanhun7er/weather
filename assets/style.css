@@ -2,7 +2,7 @@
     background: linear-gradient(360deg, rgb(169, 250, 173) 0%, rgb(23, 77, 156) 100%);
     background-size: cover;
     font-family: 'Lora', serif;
-    /* rgb(4, 64, 153) 100%); */
+    
 }
 
 
@@ -12,6 +12,9 @@
     width: 100%;
     text-align: center;
     height: 9rem;
+    border-radius: 40%;
+    box-shadow: 0 0 6px 6px rgb(23, 77, 156) inset;
+    
     
     
 }
