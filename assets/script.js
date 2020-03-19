@@ -131,7 +131,7 @@ function populatelist() {
     var searchArray = JSON.parse(localStorage.getItem("cityInput")) || [];
     $("#search-history").empty();
     searchArray.forEach(function(list) {
-        $("#search-history").prepend("<li>" + list + "</li>")
+        $("#search-history").prepend("<li>" + list + "</li>").addClass("clickMe")
     })
 };
 
@@ -140,6 +140,7 @@ populatelist();
 //load page with last query
 
 function pageLoad() {
+    loadCity();
     var searchArray = JSON.parse(localStorage.getItem("cityInput")) || [];
     var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchArray[searchArray.length-1] + '&appid=' + APIkey;
     var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchArray[searchArray.length-1] + '&appid=' + APIkey;
@@ -199,13 +200,51 @@ $.ajax({
         }
 
         $("#fiveDay").html(forecast);
+        
     }
 
 })
 }
 
-
 pageLoad();
+
+
+//function for activating history to reload on click
+
+function loadCity() {
+   
+            $('#search-history').on('click', 'li',(function() {
+            
+            
+            var citySearch = localStorage.getItem('cityInput')
+            var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + citySearch + '&appid=' + APIkey;
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function(response) {
+        
+            var cityName = $("<h4>").text(response.name);
+            var iconPic = "<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>";
+            var temp = $("<div>").text("Current Temperature: " + ((Math.floor(response.main.temp -273.15) * 1.8) + 32 + "\xB0F"));
+            var high = $("<div>").text("Expected High Temp: " + ((Math.floor(response.main.temp_max -273.15) * 1.8) + 32 + "\xB0F"));
+            var low = $("<div>").text("Expected Low Temp: " + ((Math.floor(response.main.temp_min -273.15) * 1.8) + 32 + "\xB0F"));
+            var humidity = $("<div>").text("Humidity: " + response.main.humidity + " " + "%");
+            var wind = $("<div>").text("Wind Speed: " + response.wind.speed + " " + "mph");
+        
+            $("#city-weather").empty();
+            $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind);  
+            })
+        }
+
+            ))
+    }
+    
+    
+
+    
+
+
 
 
 
@@ -224,3 +263,7 @@ pageLoad();
 
 //         var cityLoc = response.coord
 // }
+
+// $("<button>").text(searchArray[i].attr('id', searchArray[i])).addClass('cities').appendTo("#search-history");
+// $("</br>").appendTo("#search-history");
+// $("#" + searchArray[i]).on("click", function()

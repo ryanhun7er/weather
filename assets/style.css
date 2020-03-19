@@ -33,6 +33,9 @@ ul {
     padding-left: 0%;
 }
 
-
+.clickMe {
+    color: blue;
+    cursor: pointer;
+}
 
 
