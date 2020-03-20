@@ -219,7 +219,7 @@ $.ajax({
         var forecast = "";
 
 
-        forecast += "<h3>" + data.city.name + "</h3>";
+        forecast += "<h4>" + data.city.name + "</h4>";
         for (var i = 0; i < data.list.length; i++) {
 
             if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
