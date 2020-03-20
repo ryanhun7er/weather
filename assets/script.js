@@ -29,14 +29,12 @@ var APIkeyG = 'AIzaSyCmplXCB6KR_-vv7v-oTy2LQNMg_veu8ic'
 function getWeather(city) {
 
     var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIkey;
-
-//ajax for calling weather information
-
+    
 $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function(response) {
-
+    
     var cityName = $("<h4>").text(response.name);
     var iconPic = "<img src='https://openweathermap.org/img/w/" + response.weather[0].icon + ".png'>";
     var temp = $("<div>").text("Current Temperature: " + ((Math.floor(response.main.temp -273.15) * 1.8) + 32 + "\xB0F"));
@@ -44,14 +42,34 @@ $.ajax({
     var low = $("<div>").text("Expected Low Temp: " + ((Math.floor(response.main.temp_min -273.15) * 1.8) + 32 + "\xB0F"));
     var humidity = $("<div>").text("Humidity: " + response.main.humidity + " " + "%");
     var wind = $("<div>").text("Wind Speed: " + response.wind.speed + " " + "mph");
+    var lat = response.coord.lat;
+    var lon = response.coord.lon;
+
+    //varaible for uvIndex
+    
+    var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
+
+    $.ajax({
+        url: uvIndex,
+        method: 'GET',
+
+    }).then(function(request) {
+            
+        var uvIndex = $("<div>").text("UV Index: " + request.value);
+    
+
+
 
     $("#city-weather").empty();
-    $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind);
-
+    $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind, uvIndex);
     
+    
+    
+    })
   })
-
 }
+
+
 
 //function to get 5 day weather
 function fiveDay(city) {
@@ -73,18 +91,20 @@ function fiveDay(city) {
 
 
         success: function (data) {
-            console.log('Data:', data)
+            
             var forecast = "";
+            
 
 
             forecast += "<h4>" + data.city.name + "</h4>";
             for (var i = 0; i < data.list.length; i++) {
 
+                
                 if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
                     var tempH = Math.floor(data.list[i].main.temp_max);
                     var tempL = Math.floor(data.list[i].main.temp_min);
                     var dateC = data.list[i].dt_txt
-                    var dateR = dateC.split('15:00:00').join("");
+                    var dateR = new Date(dateC.split('15:00:00 GMT-0500 (Central Daylight Time)').join(""));
                     forecast += "<p>";
                     forecast += "<b>" + dateR + "</b>: ";
                     forecast += "</p>";
@@ -93,9 +113,11 @@ function fiveDay(city) {
                     forecast += "<span> | " + data.list[i].weather[0].description + "</span>";
                     forecast += "<img src='https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png'>";
                     forecast += "</p>";
+                
                 }
-            }
 
+            }
+            
             $("#fiveDay").html(forecast);
 
         }
@@ -158,10 +180,23 @@ function pageLoad() {
     var low = $("<div>").text("Expected Low Temp: " + ((Math.floor(response.main.temp_min -273.15) * 1.8) + 32 + "\xB0F"));
     var humidity = $("<div>").text("Humidity: " + response.main.humidity + " " + "%");
     var wind = $("<div>").text("Wind Speed: " + response.wind.speed + " " + "mph");
+    var lat = response.coord.lat;
+    var lon = response.coord.lon;
+
+    var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
+
+    $.ajax({
+        url: uvIndex,
+        method: 'GET',
+
+    }).then(function(request) {
+           
+        var uvIndex = $("<div>").text("UV Index: " + request.value);
 
     $("#city-weather").empty();
-    $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind);
+    $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind, uvIndex);
 })
+    })
 
 //ajax for 5 day weather to reload
 $.ajax({
@@ -187,7 +222,7 @@ $.ajax({
                 var tempH = Math.floor(data.list[i].main.temp_max);
                 var tempL = Math.floor(data.list[i].main.temp_min);
                 var dateC = data.list[i].dt_txt
-                var dateR = dateC.split('15:00:00').join("");
+                var dateR = new Date(dateC.split('15:00:00 GMT-0500 (Central Daylight Time)').join(""));
                 forecast += "<p>";
                 forecast += "<b>" + dateR + "</b>: ";
                 forecast += "</p>";
@@ -196,6 +231,8 @@ $.ajax({
                 forecast += "<span> | " + data.list[i].weather[0].description + "</span>";
                 forecast += "<img src='https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png'>";
                 forecast += "</p>";
+                console.log(dateR);
+
             }
         }
 
@@ -233,10 +270,24 @@ function loadCity() {
             var low = $("<div>").text("Expected Low Temp: " + ((Math.floor(response.main.temp_min -273.15) * 1.8) + 32 + "\xB0F"));
             var humidity = $("<div>").text("Humidity: " + response.main.humidity + " " + "%");
             var wind = $("<div>").text("Wind Speed: " + response.wind.speed + " " + "mph");
-        
-            $("#city-weather").empty();
-            $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind);  
+            var lat = response.coord.lat;
+            var lon = response.coord.lon;
+
+            var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
+
+            $.ajax({
+                url: uvIndex,
+                method: 'GET',
+
+            }).then(function(request) {
+                console.log(request);  
+                var uvIndex = $("<div>").text("UV Index: " + request.value);
+                
+                    $("#city-weather").empty();
+                    $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind, uvIndex);  
             })
+        })
+            
         
      
 //ajax for getting 5 day on button click
@@ -264,7 +315,7 @@ function loadCity() {
                             var tempH = Math.floor(data.list[i].main.temp_max);
                             var tempL = Math.floor(data.list[i].main.temp_min);
                             var dateC = data.list[i].dt_txt
-                            var dateR = dateC.split('15:00:00').join("");
+                            var dateR = new Date(dateC.split('15:00:00 GMT-0500 (Central Daylight Time)').join(""));
                             forecast += "<p>";
                             forecast += "<b>" + dateR + "</b>: ";
                             forecast += "</p>";
@@ -281,7 +332,7 @@ function loadCity() {
             })
         }
     ))
-    } 
+    }
     
 
 //add map to searched city on input
@@ -294,7 +345,7 @@ function initMap2() {
         url: queryURL,
         method: "GET"
     }).then(function(response) {
-        console.log(response);
+        
         var lng = parseFloat(response.coord.lon);
         var lat = parseFloat(response.coord.lat);
         var map = new google.maps.Map(
@@ -330,7 +381,7 @@ function initMap() {
         url: queryURL,
         method: "GET"
     }).then(function(response) {
-        console.log(response);
+        
         var lng = parseFloat(response.coord.lon);
         var lat = parseFloat(response.coord.lat);
         var map = new google.maps.Map(
