@@ -48,7 +48,7 @@ $.ajax({
 
     //varaible for uvIndex
     
-    var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
+    var uvIndex = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
   
     $.ajax({
         url: uvIndex,
@@ -105,7 +105,7 @@ function fiveDay(city) {
                     var tempH = Math.floor(data.list[i].main.temp_max);
                     var tempL = Math.floor(data.list[i].main.temp_min);
                     var dateC = data.list[i].dt_txt
-                    var dateR = new Date(dateC.split(' ').splice(0,4).join(" "));
+                    var dateR = new Date(dateC.split('15:00:00 GMT-0500 (Central Daylight Time)').join(""));
                     
                     forecast += "<p>";
                     forecast += "<b>" + dateR + "</b>: ";
@@ -185,7 +185,7 @@ function pageLoad() {
     var lat = response.coord.lat;
     var lon = response.coord.lon;
 
-    var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
+    var uvIndex = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
 
     $.ajax({
         url: uvIndex,
@@ -226,7 +226,7 @@ $.ajax({
                 var tempH = Math.floor(data.list[i].main.temp_max);
                 var tempL = Math.floor(data.list[i].main.temp_min);
                 var dateC = data.list[i].dt_txt
-                var dateR = new Date(dateC.split(" ").splice(0,4).join(""));
+                var dateR = new Date(dateC.split('15:00:00 GMT-0500 (Central Daylight Time)').join(""));
                 forecast += "<p>";
                 forecast += "<b>" + dateR + "</b>: ";
                 forecast += "</p>";
@@ -277,7 +277,7 @@ function loadCity() {
             var lat = response.coord.lat;
             var lon = response.coord.lon;
 
-            var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
+            var uvIndex = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
 
             $.ajax({
                 url: uvIndex,
