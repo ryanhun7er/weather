@@ -64,12 +64,7 @@ $.ajax({
 
     $("#city-weather").empty();
     $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind, uvIndex);
-    $("<div>").appendTo("#cityweather").addClass("uvInfo").text("UV Index: ").append(uvSpan);
-
-    
-    
-    
-    
+        
     })
   })
 }
