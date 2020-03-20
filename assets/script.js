@@ -163,6 +163,8 @@ populatelist();
 
 function pageLoad() {
     loadCity();
+    initMap3();
+    
     var searchArray = JSON.parse(localStorage.getItem("cityInput")) || [];
     var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchArray[searchArray.length-1] + '&appid=' + APIkey;
     var queryURL2 = 'https://api.openweathermap.org/data/2.5/forecast?q=' + searchArray[searchArray.length-1] + '&appid=' + APIkey;
@@ -405,6 +407,35 @@ function initMap2() {
         })
     }
 
+function initMap3() {
+
+    var searchArray = JSON.parse(localStorage.getItem("cityInput")) || [];
+    var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchArray[searchArray.length-1] + '&appid=' + APIkey;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        
+        var lng = parseFloat(response.coord.lon);
+        var lat = parseFloat(response.coord.lat);
+        var map = new google.maps.Map(
+            document.getElementById('map'), {
+                zoom: 8, 
+                center: {
+                    lat: lat,
+                    lng: lng
+                }
+            });
+        var marker = new google.maps.Marker({
+            position: {
+                lat: lat,
+                lng: lng
+            },
+             map: map
+            });
+        })
+    }
 
     
 
