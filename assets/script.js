@@ -48,7 +48,7 @@ $.ajax({
 
     //varaible for uvIndex
     
-    var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
+    var uvIndex = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
 
     $.ajax({
         url: uvIndex,
@@ -188,7 +188,7 @@ function pageLoad() {
     var lat = response.coord.lat;
     var lon = response.coord.lon;
 
-    var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
+    var uvIndex = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
 
     $.ajax({
         url: uvIndex,
@@ -278,7 +278,7 @@ function loadCity() {
             var lat = response.coord.lat;
             var lon = response.coord.lon;
 
-            var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
+            var uvIndex = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
 
             $.ajax({
                 url: uvIndex,
