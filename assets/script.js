@@ -49,7 +49,7 @@ $.ajax({
     //varaible for uvIndex
     
     var uvIndex = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon;
-
+  
     $.ajax({
         url: uvIndex,
         method: 'GET',
@@ -66,7 +66,8 @@ $.ajax({
     $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind, uvIndex);
         
     })
-  })
+})
+
 }
 
 
@@ -196,7 +197,9 @@ function pageLoad() {
     $("#city-weather").empty();
     $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind, uvIndex);
 })
-    })
+})
+
+
 
 //ajax for 5 day weather to reload
 $.ajax({
@@ -239,10 +242,10 @@ $.ajax({
         $("#fiveDay").html(forecast);
         
     }
-    
-
 })
 }
+
+
 
 pageLoad();
 
@@ -335,40 +338,6 @@ function loadCity() {
     }
     
 
-//add map to searched city on input
-function initMap2() {
-    
-    var city = document.getElementById("city").value;
-    var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIkey;
-
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function(response) {
-        
-        var lng = parseFloat(response.coord.lon);
-        var lat = parseFloat(response.coord.lat);
-        var map = new google.maps.Map(
-            document.getElementById('map'), {
-                zoom: 8, 
-                center: {
-                    lat: lat,
-                    lng: lng
-                }
-            });
-        var marker = new google.maps.Marker({
-            position: {
-                lat: lat,
-                lng: lng
-            },
-             map: map
-            });
-        })
-    }
-
-
-    
-
 
 //add map of city to search history
 function initMap() {
@@ -403,4 +372,40 @@ function initMap() {
  })
 )
 }
+
+    //add map to searched city on input
+function initMap2() {
+    
+    var city = document.getElementById("city").value;
+    var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIkey;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        
+        var lng = parseFloat(response.coord.lon);
+        var lat = parseFloat(response.coord.lat);
+        var map = new google.maps.Map(
+            document.getElementById('map'), {
+                zoom: 8, 
+                center: {
+                    lat: lat,
+                    lng: lng
+                }
+            });
+        var marker = new google.maps.Marker({
+            position: {
+                lat: lat,
+                lng: lng
+            },
+             map: map
+            });
+        })
+    }
+
+
+    
+
+
 
