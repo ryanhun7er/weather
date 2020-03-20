@@ -25,6 +25,7 @@ var APIkey = 'eab4186c021254a40cb2caf858df2e69';
 var APIkeyG = 'AIzaSyCmplXCB6KR_-vv7v-oTy2LQNMg_veu8ic'
 
 
+
 //function to get current weather
 function getWeather(city) {
 
@@ -56,12 +57,16 @@ $.ajax({
     }).then(function(request) {
             
         var uvIndex = $("<div>").text("UV Index: " + request.value);
+        
     
-
+        
 
 
     $("#city-weather").empty();
     $("#city-weather").append(cityName, iconPic, temp, high, low, humidity, wind, uvIndex);
+    $("<div>").appendTo("#cityweather").addClass("uvInfo").text("UV Index: ").append(uvSpan);
+
+    
     
     
     
@@ -403,3 +408,4 @@ function initMap() {
  })
 )
 }
+
