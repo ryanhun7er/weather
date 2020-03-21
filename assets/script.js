@@ -105,7 +105,8 @@ function fiveDay(city) {
                     var tempH = Math.floor(data.list[i].main.temp_max);
                     var tempL = Math.floor(data.list[i].main.temp_min);
                     var dateC = data.list[i].dt_txt
-                    var dateR = new Date(dateC.split('15:00:00 GMT-0500 (Central Daylight Time)').join(" "));
+                    var dateR = moment(dateC).format("MMM Do YYYY");
+                    // var dateR = (dateC.split('15:00:00 GMT-0500 (Central Daylight Time)').join(" "));
                     
                     forecast += "<p>";
                     forecast += "<b>" + dateR + "</b>: ";
@@ -228,7 +229,7 @@ $.ajax({
                 var tempH = Math.floor(data.list[i].main.temp_max);
                 var tempL = Math.floor(data.list[i].main.temp_min);
                 var dateC = data.list[i].dt_txt
-                var dateR = new Date(dateC.split('15:00:00 GMT-0500 (Central Daylight Time)').join(" "));
+                var dateR = moment(dateC).format("MMM Do YYYY");
                 forecast += "<p>";
                 forecast += "<b>" + dateR + "</b>: ";
                 forecast += "</p>";
@@ -321,7 +322,7 @@ function loadCity() {
                             var tempH = Math.floor(data.list[i].main.temp_max);
                             var tempL = Math.floor(data.list[i].main.temp_min);
                             var dateC = data.list[i].dt_txt
-                            var dateR = new Date(dateC.split('15:00:00 GMT-0500 (Central Daylight Time)').join(" "));
+                            var dateR = moment(dateC).format("MMM Do YYYY");
                             forecast += "<p>";
                             forecast += "<b>" + dateR + "</b>: ";
                             forecast += "</p>";
